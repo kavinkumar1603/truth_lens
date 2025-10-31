@@ -1,0 +1,50 @@
+[
+  {
+    "id": "c873032c-78fe-44cf-a7e6-f83a245e7671",
+    "prediction": "real",
+    "confidence": 0.9709404408057932,
+    "probability_real": 0.9709404408057932,
+    "probability_fake": 0.029059559194206774,
+    "timestamp": "2025-10-31T18:05:33.600922Z"
+  },
+  {
+    "id": "65bc1cc2-86b5-4d02-9ed2-5690c890a9ad",
+    "prediction": "fake",
+    "confidence": 0.9914072045388368,
+    "probability_real": 0.008592795461163243,
+    "probability_fake": 0.9914072045388368,
+    "timestamp": "2025-10-31T17:26:12.760606Z"
+  },
+  {
+    "id": "8ce730f6-d0b9-4b93-92e4-46add6a7810c",
+    "prediction": "real",
+    "confidence": 0.99616210244379,
+    "probability_real": 0.99616210244379,
+    "probability_fake": 0.0038378975562100015,
+    "timestamp": "2025-10-31T17:19:11.747386Z"
+  },
+  {
+    "id": "eaadbc14-73ba-443c-b682-d9211d7a4aff",
+    "prediction": "real",
+    "confidence": 0.99616210244379,
+    "probability_real": 0.99616210244379,
+    "probability_fake": 0.0038378975562100015,
+    "timestamp": "2025-10-31T16:38:14.149369Z"
+  },
+  {
+    "id": "c623a3a5-b97f-4738-b7af-7a504f7fc728",
+    "prediction": "fake",
+    "confidence": 0.9914072045388368,
+    "probability_real": 0.008592795461163243,
+    "probability_fake": 0.9914072045388368,
+    "timestamp": "2025-10-31T16:37:59.280779Z"
+  },
+  {
+    "id": "9bb0f456-d2b1-4d79-af5f-1973a01c6b84",
+    "prediction": "real",
+    "confidence": 0.9978448138828461,
+    "probability_real": 0.9978448138828461,
+    "probability_fake": 0.002155186117153929,
+    "timestamp": "2025-10-31T16:37:03.825390Z"
+  }
+]
