@@ -1,13 +1,13 @@
-/* Header Styles - Clean & Professional */
+/* Header Styles - Premium Polished */
 .header {
-  background: linear-gradient(90deg, #0066cc 0%, #004399 100%);
+  background: linear-gradient(135deg, #0b5ed7 0%, #0947a6 60%, #073b88 100%);
   color: var(--white);
-  padding: 1.25rem 0;
-  box-shadow: var(--shadow-md);
+  padding: 1rem 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 3px solid #003366;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .header-container {
@@ -19,36 +19,47 @@
   align-items: center;
 }
 
-.logo-section {
-  flex: 1;
-}
+.logo-section { flex: 1; }
 
-.logo-title {
-  font-size: 1.75rem;
-  font-weight: 800;
-  margin: 0;
+.brand {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  letter-spacing: -0.5px;
 }
 
-.logo-title::before {
-  content: '';
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  background: #ffffff;
-  border-radius: 6px;
-  margin-right: 0.5rem;
+.logo-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.logo-icons img {
+  width: 28px;
+  height: 28px;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+}
+
+.brand-text { display: flex; flex-direction: column; }
+
+.logo-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.3px;
 }
 
 .logo-subtitle {
-  font-size: 0.85rem;
-  opacity: 0.85;
-  margin: 0.35rem 0 0 2.75rem;
-  font-weight: 400;
-  letter-spacing: 0.3px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.9;
+  margin: 0.15rem 0 0 0;
+  font-weight: 500;
+  letter-spacing: 0.2px;
 }
 
 .header-nav ul {
@@ -61,15 +72,22 @@
 .header-nav a {
   color: var(--white);
   font-weight: 600;
-  padding: 0.75rem 1.25rem;
+  padding: 0.65rem 1.1rem;
   border-radius: var(--radius);
   border: 2px solid transparent;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   font-size: 1rem;
 }
 
 .header-nav a:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+.header-nav a.active {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
 }
 
 @media (max-width: 768px) {
@@ -80,11 +98,11 @@
   }
 
   .logo-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .logo-subtitle {
-    margin-left: 2.5rem;
+    margin-left: 0;
   }
 
   .header-nav ul {

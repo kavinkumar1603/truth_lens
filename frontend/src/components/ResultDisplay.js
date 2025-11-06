@@ -17,8 +17,10 @@ function ResultDisplay({ result, loading }) {
     return null;
   }
 
-  const confidence = Math.round(result.confidence * 100);
+  const confidence = Math.round((result.confidence || 0) * 100);
   const isReal = result.prediction === 'real';
+  const probReal = result.probability_real != null ? Math.round(result.probability_real * 100) : null;
+  const probFake = result.probability_fake != null ? Math.round(result.probability_fake * 100) : null;
   
   return (
     <div className="result-container">
@@ -50,9 +52,19 @@ function ResultDisplay({ result, loading }) {
             </span>
           </div>
           <div className="detail-item">
-            <span className="detail-label">Probability:</span>
-            <span className="detail-value">{confidence}% Confident</span>
+            <span className="detail-label">Confidence:</span>
+            <span className="detail-value">{confidence}%</span>
           </div>
+          {(probReal !== null || probFake !== null) && (
+            <div className="detail-item">
+              <span className="detail-label">Class Probabilities:</span>
+              <span className="detail-value">
+                {probReal !== null ? `Real: ${probReal}%` : ''}
+                {probReal !== null && probFake !== null ? ' • ' : ''}
+                {probFake !== null ? `Fake: ${probFake}%` : ''}
+              </span>
+            </div>
+          )}
           {result.reasoning && (
             <div className="detail-item full-width">
               <span className="detail-label">Analysis:</span>

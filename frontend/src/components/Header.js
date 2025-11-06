@@ -1,5 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import MagnifierIcon from '../assets/icons/magnifier.svg';
+import NewspaperIcon from '../assets/icons/newspaper.svg';
+import ShieldIcon from '../assets/icons/shield.svg';
 import '../styles/Header.css';
 
 function Header() {
@@ -7,13 +10,34 @@ function Header() {
     <header className="header">
       <div className="header-container">
         <div className="logo-section">
-          <h1 className="logo-title">🔍 Fake News Detector</h1>
-          <p className="logo-subtitle">Identify Real vs Fake News with AI</p>
+          <div className="brand">
+            <div className="logo-icons" aria-hidden="true">
+              <img src={NewspaperIcon} alt="News icon" />
+            </div>
+            <div className="brand-text">
+              <h1 className="logo-title">Fake News Detector</h1>
+              <p className="logo-subtitle">Identify Real vs Fake News with AI</p>
+            </div>
+          </div>
         </div>
         <nav className="header-nav">
           <ul>
-            <li><Link to="/detector">Detector</Link></li>
-            <li><Link to="/history">History</Link></li>
+            <li>
+              <NavLink
+                to="/detector"
+                className={({ isActive }) => isActive ? 'active' : undefined}
+              >
+                Detector
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/history"
+                className={({ isActive }) => isActive ? 'active' : undefined}
+              >
+                History
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>

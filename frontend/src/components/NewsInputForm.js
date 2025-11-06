@@ -2,52 +2,33 @@ import React, { useState } from 'react';
 import '../styles/NewsInputForm.css';
 
 function NewsInputForm({ onSubmit }) {
-  const [inputType, setInputType] = useState('text');
   const [newsText, setNewsText] = useState('');
-  const [newsUrl, setNewsUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const MIN_LEN = 50;
 
   const handleTextChange = (e) => {
     setNewsText(e.target.value);
     setError('');
   };
 
-  const handleUrlChange = (e) => {
-    setNewsUrl(e.target.value);
-    setError('');
-  };
-
   const validateInput = () => {
-    if (inputType === 'text' && newsText.trim().length < 50) {
-      setError('Please enter at least 50 characters of news text');
-      return false;
-    }
-    if (inputType === 'url' && !isValidUrl(newsUrl)) {
-      setError('Please enter a valid URL');
+    if (newsText.trim().length < MIN_LEN) {
+      setError(`Please enter at least ${MIN_LEN} characters of news text`);
       return false;
     }
     return true;
   };
 
-  const isValidUrl = (url) => {
-    try {
-      new URL(url);
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateInput()) return;
 
     setLoading(true);
     const data = {
-      type: inputType,
-      content: inputType === 'text' ? newsText : newsUrl,
+      type: 'text',
+      content: newsText,
     };
 
     try {
@@ -61,72 +42,31 @@ function NewsInputForm({ onSubmit }) {
 
   const handleReset = () => {
     setNewsText('');
-    setNewsUrl('');
     setError('');
-    setInputType('text');
   };
+
+  const charClass = newsText.length === 0 ? '' : newsText.length < MIN_LEN ? 'warning' : '';
 
   return (
     <div className="input-form-container">
       <form onSubmit={handleSubmit} className="news-form">
         <div className="form-header">
           <h2>Check News Credibility</h2>
-          <p>Enter a news article or URL to analyze</p>
+          <p>Paste a news article below and we’ll analyze it using the trained model.</p>
         </div>
 
-        <div className="input-type-selector">
-          <label className={`type-option ${inputType === 'text' ? 'active' : ''}`}>
-            <input
-              type="radio"
-              value="text"
-              checked={inputType === 'text'}
-              onChange={(e) => {
-                setInputType(e.target.value);
-                setError('');
-              }}
-            />
-            <span>📝 Text Input</span>
-          </label>
-          <label className={`type-option ${inputType === 'url' ? 'active' : ''}`}>
-            <input
-              type="radio"
-              value="url"
-              checked={inputType === 'url'}
-              onChange={(e) => {
-                setInputType(e.target.value);
-                setError('');
-              }}
-            />
-            <span>🔗 URL Input</span>
-          </label>
+        <div className="form-group">
+          <label htmlFor="newsText">Enter News Article</label>
+          <textarea
+            id="newsText"
+            value={newsText}
+            onChange={handleTextChange}
+            placeholder={`Paste your news article here (minimum ${MIN_LEN} characters)...`}
+            rows="10"
+            disabled={loading}
+          />
+          <span className={`char-count ${charClass}`}>{newsText.length} characters</span>
         </div>
-
-        {inputType === 'text' ? (
-          <div className="form-group">
-            <label htmlFor="newsText">Enter News Article</label>
-            <textarea
-              id="newsText"
-              value={newsText}
-              onChange={handleTextChange}
-              placeholder="Paste your news article here (minimum 50 characters)..."
-              rows="8"
-              disabled={loading}
-            />
-            <span className="char-count">{newsText.length} characters</span>
-          </div>
-        ) : (
-          <div className="form-group">
-            <label htmlFor="newsUrl">Enter News URL</label>
-            <input
-              id="newsUrl"
-              type="url"
-              value={newsUrl}
-              onChange={handleUrlChange}
-              placeholder="https://example.com/news-article"
-              disabled={loading}
-            />
-          </div>
-        )}
 
         {error && <div className="error-message">{error}</div>}
 
