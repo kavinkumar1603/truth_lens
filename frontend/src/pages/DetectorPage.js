@@ -30,30 +30,40 @@ function DetectorPage() {
   return (
     <div className="detector-page">
       <div className="detector-container">
-        <NewsInputForm onSubmit={handleNewsSubmit} />
-        <ResultDisplay result={result} loading={loading} />
-
-        {history.length > 0 && (
-          <div className="history-section">
-            <h2>Recent Analyses</h2>
-            <div className="history-list">
-              {history.map((item, index) => (
-                <div
-                  key={index}
-                  className={`history-item ${item.prediction}`}
-                  onClick={() => setResult(item)}
-                >
-                  <span className="history-prediction">
-                    {item.prediction === 'real' ? '✓ Real' : '✗ Fake'}
-                  </span>
-                  <span className="history-confidence">
-                    {Math.round(item.confidence * 100)}% confidence
-                  </span>
+        <div className="detector-grid">
+          <div className="input-section">
+            <NewsInputForm onSubmit={handleNewsSubmit} />
+            
+            {history.length > 0 && (
+              <div className="history-section">
+                <h2>Recent Analyses</h2>
+                <div className="history-list">
+                  {history.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`history-item ${item.prediction}`}
+                      onClick={() => setResult(item)}
+                    >
+                      <span className="history-prediction">
+                        {item.prediction === 'real' ? '✓ Real' : '✗ Fake'}
+                      </span>
+                      <span className="history-confidence">
+                        {Math.round(item.confidence * 100)}% confidence
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            )}
+          </div>
+          
+          <div className="analysis-section">
+            <div className="analysis-panel">
+              <h2 className="analysis-title">Analysis Results</h2>
+              <ResultDisplay result={result} loading={loading} />
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
