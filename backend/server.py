@@ -56,6 +56,7 @@ class AnalyzeResponse(BaseModel):
     confidence: float  # 0..1
     probability_real: float
     probability_fake: float
+    content: str
     timestamp: str
 
 
@@ -107,6 +108,7 @@ def analyze(req: AnalyzeRequest):
         "confidence": confidence,
         "probability_real": prob_real,
         "probability_fake": prob_fake,
+        "content": text,
         "timestamp": datetime.utcnow().isoformat() + "Z",
     }
 

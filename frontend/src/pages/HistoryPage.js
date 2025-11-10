@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/HistoryPage.css';
+import { getHistory, clearAllHistory, deleteAnalysis } from '../services/newsService';
 
 function HistoryPage() {
   const [history, setHistory] = useState([]);
@@ -7,11 +8,15 @@ function HistoryPage() {
   const [sortBy, setSortBy] = useState('recent');
 
   useEffect(() => {
-    // Fetch history from localStorage or API
-    const savedHistory = localStorage.getItem('newsAnalysisHistory');
-    if (savedHistory) {
-      setHistory(JSON.parse(savedHistory));
-    }
+    // Load history from backend on mount
+    (async () => {
+      try {
+        const items = await getHistory();
+        setHistory(items);
+      } catch (e) {
+        console.error('Failed to load history', e);
+      }
+    })();
   }, []);
 
   const filteredHistory = history.filter((item) => {
@@ -26,17 +31,23 @@ function HistoryPage() {
     return 0;
   });
 
-  const clearHistory = () => {
-    if (window.confirm('Are you sure you want to clear all history?')) {
+  const clearHistory = async () => {
+    if (!window.confirm('Are you sure you want to clear all history?')) return;
+    try {
+      await clearAllHistory();
       setHistory([]);
-      localStorage.removeItem('newsAnalysisHistory');
+    } catch (e) {
+      console.error('Failed to clear history', e);
     }
   };
 
-  const deleteItem = (index) => {
-    const newHistory = history.filter((_, i) => i !== index);
-    setHistory(newHistory);
-    localStorage.setItem('newsAnalysisHistory', JSON.stringify(newHistory));
+  const deleteItem = async (id) => {
+    try {
+      await deleteAnalysis(id);
+      setHistory((prev) => prev.filter((h) => h.id !== id));
+    } catch (e) {
+      console.error('Failed to delete analysis', e);
+    }
   };
 
   const exportHistory = () => {
@@ -126,8 +137,8 @@ function HistoryPage() {
             </div>
 
             <div className="history-list">
-              {sortedHistory.map((item, index) => (
-                <div key={index} className={`history-item-card ${item.prediction}`}>
+              {sortedHistory.map((item) => (
+                <div key={item.id} className={`history-item-card ${item.prediction}`}>
                   <div className="history-item-header">
                     <span className={`prediction-badge ${item.prediction}`}>
                       {item.prediction === 'real' ? '✓ Real News' : '✗ Fake News'}
@@ -136,14 +147,16 @@ function HistoryPage() {
                       {Math.round(item.confidence * 100)}% confident
                     </span>
                   </div>
-                  <p className="history-item-content">{item.content?.substring(0, 150)}...</p>
+                  {item.content && (
+                    <p className="history-item-content">{item.content.substring(0, 150)}...</p>
+                  )}
                   <div className="history-item-footer">
                     <span className="timestamp">
                       {new Date(item.timestamp).toLocaleString()}
                     </span>
                     <button
                       className="btn-delete"
-                      onClick={() => deleteItem(index)}
+                      onClick={() => deleteItem(item.id)}
                       title="Delete"
                     >
                       ✕
